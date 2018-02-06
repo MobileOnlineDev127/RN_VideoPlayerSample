@@ -9,7 +9,8 @@ import {
   Dimensions,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  ListView
+  ListView,
+  Platform
 } from 'react-native';
 
 import Orientation from 'react-native-orientation';
@@ -89,11 +90,24 @@ class Dashboard extends Component<{}> {
     _clickToggle = () => {
         const initial = Orientation.getInitialOrientation();
         if (this.state.pageHeight > this.state.pageWidth) {
-            Orientation.lockToLandscapeLeft();
-            Orientation.unlockAllOrientations();
+            if(Platform.OS == 'ios'){
+                Orientation.lockToLandscapeLeft();
+                Orientation.unlockAllOrientations();
+            }
+            else{
+                Orientation.lockToLandscapeLeft();
+                setTimeout(() => Orientation.unlockAllOrientations(), 2000)
+            }
+            
         } else {
-            Orientation.lockToPortrait();
-            Orientation.unlockAllOrientations();
+            if(Platform.OS = 'ios'){
+                Orientation.lockToPortrait();
+                Orientation.unlockAllOrientations();
+            }
+            else {
+                Orientation.lockToPortrait();
+                setTimeout(() => Orientation.unlockAllOrientations(), 2000)
+            }
         }  
 
     }
